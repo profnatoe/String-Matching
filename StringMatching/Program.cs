@@ -61,17 +61,30 @@ namespace StringMatching
             return newString;
         }
 
-        public static string CalculatePercentage(int numbers)
+        public static string CalculatePercentage(string numbers)
         {
-            var newString = numbers.ToString();
-            var l = 0;
-            var r = newString.Length - 1;
-            var sum = new { };
+            var newString = "";
+            //process the string until there's either 1 or 0 chars left. remember the length starts from 0 not 1
+            while(numbers.Length > 1)
+            {
+                //add the left most and the right most chars to a new string
+                newString += int.Parse(numbers[0].ToString()) + int.Parse(numbers[numbers.Length - 1].ToString());
+                //remove the first and the last numbers from the original string of numbers
+                numbers = numbers.Substring(1, numbers.Length - 2);
+            }
+            //add the remaining characters to a new string
+            newString += numbers;
 
-            if (newString.Length <= 2)
-                return numbers.ToString();
-
-            
+            //should the new string be more than 2 chars it will run the method again. see that we are using recursion here
+            if(newString.Length > 2)
+            {
+              
+                return CalculatePercentage(newString); 
+            }
+            else
+            {
+                return newString;
+            }
         }
 
         public static void DeclareOutput(string percentage, string name, string otherName)
